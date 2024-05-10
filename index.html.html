@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f0f0f0;
+  }
+  video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+  }
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+  }
+  .title {
+    font-size: 36px;
+    color: #333;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  .container {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 1s ease-out;
+    margin-top: 20px;
+  }
+  .clock-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .glass-clock {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    margin: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 24px;
+    color: #333;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    animation: fadeIn 1s ease-out;
+  }
+  .colon {
+    font-size: 36px;
+    color: #333;
+    margin: 0 5px;
+    animation: fadeIn 1s ease-out;
+  }
+  .play-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    outline: none;
+    transition: background-color 0.3s ease;
+    z-index: 1;
+    animation: fadeIn 1s ease-out;
+  }
+  .play-button:hover {
+    background-color: #555;
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+</head>
+<body>
+
+<audio id="bgAudio" autoplay>
+  <source src="SaveTube.io - 💗🥰🥀Tum Jo Aaye Zindagi Mein Full Song _ Slowed And Reverb _ Hindi Love Song _ Tulsi Kumar (128 kbps).mp3" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
+
+<video autoplay muted loop>
+  <source src="cc.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<div class="overlay">
+  <div class="title">Happy Anniversary</div>
+</div>
+
+<div class="container">
+  <div class="clock-container" id="timer">
+    <div class="glass-clock" id="days">00</div>
+    <div class="colon">:</div>
+    <div class="glass-clock" id="hours">00</div>
+    <div class="colon">:</div>
+    <div class="glass-clock" id="minutes">00</div>
+    <div class="colon">:</div>
+    <div class="glass-clock" id="seconds">00</div>
+  </div>
+</div>
+
+<button class="play-button" onclick="toggleAudio()">▶</button>
+
+<script>
+  function updateTimer() {
+    const endTime = new Date("May 10, 2024 12:12:00").getTime();
+    const currentTime = new Date().getTime();
+    const remainingTime = endTime - currentTime;
+
+    if (remainingTime <= 0) {
+      // Redirect to another page
+      window.location.href = "oo.html";
+    } else {
+      const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerHTML = formatTime(days);
+      document.getElementById("hours").innerHTML = formatTime(hours);
+      document.getElementById("minutes").innerHTML = formatTime(minutes);
+      document.getElementById("seconds").innerHTML = formatTime(seconds);
+    }
+  }
+
+  function formatTime(time) {
+    return time < 10 ? `0${time}` : time;
+  }
+
+  function toggleAudio() {
+    var audio = document.getElementById("bgAudio");
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  }
+
+  // Update timer every second
+  setInterval(updateTimer, 1000);
+
+  // Initial call to update timer immediately
+  updateTimer();
+</script>
+
+</body>
+</html>
